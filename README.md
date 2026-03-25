@@ -33,7 +33,8 @@
 
 
 # Catatan
-Di awal, saya melakukan clone repository project suilens melalui link yang tertera pada dokumen.
+- Di awal, saya melakukan clone repository project suilens melalui link yang tertera pada dokumen.
+- Saya menggunakan local kubernetes cluster dari tutorial. Pada tutorial, saya menggunakan kind.
 
 # Disclosure
 Saya menggunakan Generative AI untuk kode pada pengerjaan tahap awal. Setelahnya, saya melakukan modifikasi serta penyesuaian kode berdasarkan requirement.
