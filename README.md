@@ -33,7 +33,7 @@
 
 
 # Catatan
-- Di awal, saya melakukan clone repository project suilens melalui link yang tertera pada dokumen. Setelahnya, saya akan melakukan `git push --force-with-lease origin main` untuk memperbarui kode dengan lebih aman.
+- Di awal, saya melakukan clone repository project suilens melalui link yang tertera pada dokumen. Setelahnya, saya akan melakukan `git push origin main` untuk memperbarui kode dengan lebih aman.
 - Saya menggunakan local kubernetes cluster dari tutorial. Pada tutorial, saya menggunakan kind.
 
 # Disclosure
