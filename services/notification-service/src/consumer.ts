@@ -1,11 +1,30 @@
 import amqplib from "amqplib";
 import { db } from "./db";
 import { notifications } from "./db/schema";
+import { wsConnections } from "./index";
 
 const RABBITMQ_URL =
   process.env.RABBITMQ_URL || "amqp://guest:guest@localhost:5672";
 const EXCHANGE_NAME = "suilens.events";
 const QUEUE_NAME = "notification-service.order-events";
+
+export function broadcastNotification(notification: any) {
+  const message = JSON.stringify({
+    type: 'new_notification',
+    data: notification
+  });
+
+  wsConnections.forEach((ws) => {
+    try {
+      ws.send(message);
+    } catch (error) {
+      console.error('Error sending to WebSocket client:', error);
+      wsConnections.delete(ws);
+    }
+  });
+
+  console.log(`Broadcasted notification to ${wsConnections.size} WebSocket clients`);
+}
 
 export async function startConsumer() {
   let retries = 0;
@@ -34,14 +53,23 @@ export async function startConsumer() {
             const { orderId, customerName, customerEmail, lensName } =
               event.data;
 
-            await db.insert(notifications).values({
+            const notificationData = {
               orderId,
               type: "order_placed",
               recipient: customerEmail,
               message: `Hi ${customerName}, your rental order for ${lensName} has been placed successfully. Order ID: ${orderId}`,
-            });
+            };
+
+            const [savedNotification] = await db.insert(notifications).values(notificationData).returning();
 
             console.log(`Notification recorded for order ${orderId}`);
+
+            broadcastNotification({
+              ...savedNotification,
+              customerName,
+              lensName,
+              eventData: event.data
+            });
           }
 
           channel.ack(msg);

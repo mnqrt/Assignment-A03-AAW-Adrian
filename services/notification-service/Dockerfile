@@ -4,4 +4,4 @@ COPY package.json bun.lock* ./
 RUN bun install --frozen-lockfile
 COPY . .
 EXPOSE 3003
-CMD ["bun", "run", "src/index.ts"]
+CMD ["sh", "-c",  "bunx drizzle-kit push && bun run src/index.ts"]

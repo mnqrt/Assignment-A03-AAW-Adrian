@@ -1,43 +1,39 @@
-# suilens-microservice-tutorial
+# Adrian Aryaputra Hamzah - 2206811474
+# AAW - Assignment 3
 
-Microservices tutorial implementation for Assignment 1 Part 2.2.
+## Implementasikan dokumentasi OpenAPI pada suilens untuk setiap endpoint yang ada
+### Catalog
+![catalog-intro](/docs-catalog-intro.png)
+![catalog-1](/docs-catalog-1.png)
+![catalog-2](/docs-catalog-2.png)
 
-## Run
+### Order
+![order-intro](/docs-order-intro.png)
+![order-1](/docs-order-1.png)
+![order-2](/docs-order-2.png)
+![order-3](/docs-order-3.png)
 
-```bash
-docker compose up --build -d
-```
+### Notification
+![notification-intro](/docs-notification-intro.png)
+![notification-1](/docs-notification-1.png)
 
-## Migrate + Seed (from host)
+## Implementasikan API WebSocket pada suilens yang langsung menunjukkan notifikasi muncul pada frontend.
 
-```bash
-(cd services/catalog-service && bun install --frozen-lockfile && bunx drizzle-kit push)
-(cd services/order-service && bun install --frozen-lockfile && bunx drizzle-kit push)
-(cd services/notification-service && bun install --frozen-lockfile && bunx drizzle-kit push)
-(cd services/catalog-service && bun run src/db/seed.ts)
-```
+### Awal 
+![fe-before](/fe-before.png)
+### Smoke Test 
+![smoke-test-1](/smoke-test-1.png)
+![smoke-test-2](/smoke-test-2.png)
+### Akhir 
+![fe-after](/fe-after.png)
 
-## Smoke Test
 
-```bash
-curl http://localhost:3001/api/lenses | jq
-LENS_ID=$(curl -s http://localhost:3001/api/lenses | jq -r '.[0].id')
+## Buatlah sebuah local kubernetes cluster
+![kubectl](/kubectl.png)
 
-curl -X POST http://localhost:3002/api/orders \
-  -H "Content-Type: application/json" \
-  -d '{
-    "customerName": "Budi Santoso",
-    "customerEmail": "budi@example.com",
-    "lensId": "'"$LENS_ID"'",
-    "startDate": "2025-03-01",
-    "endDate": "2025-03-05"
-  }' | jq
 
-docker compose logs notification-service --tail 20
-```
+# Catatan
+Di awal, saya melakukan clone repository project suilens melalui link yang tertera pada dokumen.
 
-## Stop
-
-```bash
-docker compose down
-```
+# Disclosure
+Saya menggunakan Generative AI untuk kode pada pengerjaan tahap awal. Setelahnya, saya melakukan modifikasi serta penyesuaian kode berdasarkan requirement.
